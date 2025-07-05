@@ -17,3 +17,4 @@ Project-4: poetry.html
 Project-5: spotify.py
           One-Liner Explanation: Gives song Recommendation(10songs) based on mood
           ![Output](https://github.com/AyushaH2005/Challenge-5-Codes-with-less-than-100-lines/blob/main/Screenshot%202025-07-05%20232537.png)
+          in the code Client id and client secret are not mentioned since its confidential
