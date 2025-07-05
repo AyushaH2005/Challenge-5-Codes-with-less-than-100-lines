@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Musical Poetry from Noise</title>
+  <style>
+    body { font-family: monospace; text-align: center; padding: 40px; background: #fdfdfd; }
+    textarea { width: 80%; height: 120px; margin-top: 20px; font-family: monospace; }
+    pre { background: #eee; padding: 15px; white-space: pre-wrap; margin-top: 20px; }
+    button { margin: 10px; padding: 8px 16px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>🎤 Poetry from Noise 🎵</h1>
+  <textarea id="input" placeholder="Paste logs, error messages, or random text here..."></textarea><br>
+  <button onclick="generatePoem()">Make Poem</button>
+  <button onclick="singPoem()">Sing It 🎶</button>
+  <pre id="output">Your glitch becomes a song...</pre>
+
+  <script>
+    let currentPoem = "";
+
+    function generatePoem() {
+      const raw = document.getElementById("input").value;
+      const words = raw.match(/\b[\w\-]{3,}\b/g) || [];
+      if (words.length < 5) {
+        currentPoem = "Not enough chaos. Paste more madness.";
+        document.getElementById("output").innerText = currentPoem;
+        return;
+      }
+
+      const pick = () => words[Math.floor(Math.random() * words.length)];
+      const line1 = `${pick()} ${pick()} / ${pick()} of ${pick()}`;
+      const line2 = `${pick()}, ${pick()} — like a ${pick()}`;
+      const line3 = `${pick()}: not ${pick()} in ${pick()}`;
+      currentPoem = `${line1}\n${line2}\n${line3}`;
+      document.getElementById("output").innerText = currentPoem;
+    }
+
+    function singPoem() {
+      if (!currentPoem) return;
+      const lines = currentPoem.split(/\s+/); // break poem into words
+      let delay = 0;
+
+      // Simulate melody by shifting pitch & rate per word
+      lines.forEach((word, i) => {
+        const utter = new SpeechSynthesisUtterance(word);
+        utter.pitch = 1 + 0.5 * Math.sin(i);           // sine-wave melody
+        utter.rate = 0.8 + 0.2 * Math.cos(i * 0.7);    // vary tempo gently
+        utter.volume = 1;
+        utter.lang = "en-US";
+        setTimeout(() => speechSynthesis.speak(utter), delay);
+        delay += 400 + Math.random() * 200; // add dramatic pauses
+      });
+    }
+  </script>
+</body>
+</html>
